@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>login</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href="css/signin.css" rel="stylesheet"/>
+    <link rel="icon" href="images/movie.ico"/>
+</head>
+
+<body>
+
+<div class="container">
+    <form class="form-signin" th:action="@{/login}" method="post">
+        <h2 class="form-signin-heading text-muted">Entra ya y disfruta de todo el cine</h2>
+        <label for="inputUsername" class="sr-only">Username</label>
+        <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required="" autofocus=""/>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required=""/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+        <div th:if="${param.error}">
+            <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+            <span class="text-danger">Invalid credentials</span>
+        </div>
+
+    </form>
+</div> <!-- /container -->
+
+</body>
+</html>
