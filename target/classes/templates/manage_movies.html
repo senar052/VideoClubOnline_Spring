@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>manageMovies</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet"/>
+    <link rel="icon" href="images/movie.ico"/>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: Black;
+
+        }
+        ul.nav li a, ul.nav li a:visited{
+            color: black;
+        }
+
+
+
+    </style>
+
+
+
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">LOGO</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="active">
+                    <a th:href="@{/home}">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        Inicio
+                    </a>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search" th:action="@{/home}" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search" placeholder="Buscar película"/>
+                </div>
+                <button type="submit" class="btn btn-link">Buscar</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-user" aria-hidden="false"></span>
+                        <span sec:authentication="name">user</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-header">Acciones admin</li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/new_movie}">Añadir Pelicula</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manage_users}">Gestionar Usuarios</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manage_movies}">Gestionar Peliculas</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" role="separator" class="divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button class="btn btn-link" type="submit">Sign Out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div th:if="${type_message == 'create'}" class="alert alert-success alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Éxito!</strong> <span th:text="${message}">mensaje!!!</span>
+</div>
+
+<div th:if="${type_message == 'update'}" class="alert alert-info alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Éxito!</strong> <span th:text="${message}">mensaje!!!</span>
+</div>
+
+<div th:if="${type_message == 'delete'}" class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Éxito!</strong> <span th:text="${message}">mensaje!!!</span>
+</div>
+
+
+
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Portada</th>
+            <th>Titulo</th>
+            <th>Año</th>
+            <th>Director</th>
+            <th>Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="movie : ${movies}">
+
+            <td>
+                <img th:src="${movie.getUrlImagen()}" alt="Imagen" height="268px" width="182px"/>
+            </td>
+            <td th:text="|${movie.getTitulo()}|"></td>
+            <td th:text="|${movie.getYear()}|"></td>
+            <td th:text="|${movie.getDirector()}|"></td>
+            <td>
+
+                <a th:href="@{/edit_movie(id=${movie.getId()})}">
+                    <button type="button" class="btn btn-primary" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </button>
+                </a>
+
+                <a th:href="@{/delete_movie(id=${movie.getId()})}">
+                    <button type="button" class="btn btn-danger" aria-label="Left Align">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<p><a class="btn btn-primary" th:href="@{/new_movie}">Añadir pelicula</a></p>
+
+
+</body>
+</html>

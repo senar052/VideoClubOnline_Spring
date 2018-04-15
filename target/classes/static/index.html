@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>index</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href="css/cover.css" rel="stylesheet"/>
+    <link rel="icon" href="images/movie.ico"/>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+
+
+        /* Set black background color, white text and some padding */
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+
+
+    </style>
+</head>
+
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            </button>
+            <a class="navbar-brand" href="#">Logo</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <button type="button" onclick="location.href='login'"  class="btn btn-link">
+                    <span class="glyphicon glyphicon-log-in"></span> Login
+                </button>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!--//col-xs-12 col-sm-12 col-md-12 col-lg-12 para hacerlo responsive
+<div class="embed-responsive embed-responsive-16by9 col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <iframe allowfullscreen="allowfullscreen" mozallowfullscreen="mozallowfullscreen" msallowfullscreen="msallowfullscreen" oallowfullscreen="oallowfullscreen" webkitallowfullscreen="webkitallowfullscreen" class="embed-responsive-item" src="//www.youtube.com/embed/u1pOOr2uI-w?autoplay=1"></iframe>
+</div>
+-->
+<!-- Explicacion autoplay res controls.... https://www.lifestylealcuadrado.com/trucos-para-insertar-videos-youtube/ -->
+<div class="embed-responsive embed-responsive-16by9">
+    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Kae-JjbLsgA?autoplay=1&showinfo=0&rel=0&loop=1&playlist=Kae-JjbLsgA"></iframe>
+
+</div>
+
+
+
+<footer class="container-fluid text-center">
+    <p>Contactenos en el telf 666 666 666 </p>
+</footer>
+
+</body>
+</html>

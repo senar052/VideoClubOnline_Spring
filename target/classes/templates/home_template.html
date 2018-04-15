@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>home</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet"/>
+    <link rel="icon" href="images/movie.ico"/>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+        /* Remove the navbar's default margin-bottom and rounded borders */
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+            background-color: Black;
+
+        }
+
+        ul.nav li a, ul.nav li a:visited {
+            color: black;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">LOGO</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-left">
+                <li class="active">
+                    <a th:href="@{/home}">
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        Inicio
+                    </a>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search" th:action="@{/home}" method="get">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="search" placeholder="Buscar película"/>
+                </div>
+                <button type="submit" class="btn btn-link">Buscar</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">
+                        <span class="glyphicon glyphicon-user" aria-hidden="false"></span>
+                        <span sec:authentication="name">user</span>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" class="dropdown-header">Acciones admin</li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/new_movie}">Añadir Pelicula</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manage_users}">Gestionar Usuarios</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/manage_movies}">Gestionar Peliculas</a></li>
+                        <li sec:authorize="hasRole('ROLE_ADMIN')" role="separator" class="divider"></li>
+                        <li>
+                            <form th:action="@{/logout}" method="post">
+                                <button class="btn btn-link" type="submit">Sign Out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="jumbotron">
+    <div class="container text-center">
+        <h1>Peliculas Recomendadas</h1>
+        <div class="container-fluid bg-6 text-center">
+            <div class="row">
+                <div class="col-sm-2">
+                    <p>Batman</p>
+                    <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BNTM3OTc0MzM2OV5BMl5BanBnXkFtZTYwNzUwMTI3._V1_SX300.jpg"
+                         class="img-responsive" style="width:100%" alt="Image"></img>
+                </div>
+                <div class="col-sm-2">
+                    <p>Tadeo Jones</p>
+                    <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BODIwZjhiZDQtZGZlZi00ZmFkLWIxYmMtNTg1YTcwMjFlMTY2L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMzU3MDU3NjI@._V1_SX300.jpg"
+                         class="img-responsive" style="width:100%" alt="Image"></img>
+                </div>
+                <div class="col-sm-2">
+                    <p>Guardianes de la galaxia</p>
+                    <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTg2MzI1MTg3OF5BMl5BanBnXkFtZTgwNTU3NDA2MTI@._V1_SX300.jpg"
+                         class="img-responsive" style="width:100%" alt="Image"></img>
+                </div>
+                <div class="col-sm-2">
+                    <p>Avatar</p>
+                    <img src="http://images2.coveralia.com/dvd/a/Avatar-Cartel.jpg" class="img-responsive"
+                         style="width:100%" alt="Image"></img>
+                </div>
+                <div class="col-sm-2">
+                    <p>La momia</p>
+                    <img src="http://fusion-freak.es/wp-content/uploads/2017/04/la-momia-2017-poster-2.jpg"
+                         class="img-responsive" style="width:100%" alt="Image"></img>
+                </div>
+                <div class="col-sm-2">
+                    <p>Star Wars</p>
+                    <img src="http://am-elsalv-cdn.agilecontents.com/resources/jpg/1/6/1445212407661.jpg"
+                         class="img-responsive" style="width:100%" alt="Image"></img>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-sm-2 " th:each="movie : ${peliculas}">
+            <div >
+                <a href="@{/watch_movie}" th:href="@{/watch_movie(id=${movie.getId()})}">
+                    <img th:src="${movie.getUrlImagen()}" alt="Imagen" height="268px" width="182px"/>
+                </a>
+                <div class="caption">
+                    <h4>
+                        <a href="@{/watch_movie}" th:href="@{/watch_movie(id=${movie.getId()})}"
+                           th:text="|${movie.getTitulo()}|">Película</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
